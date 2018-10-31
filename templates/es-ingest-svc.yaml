@@ -1,3 +1,4 @@
+{{- if .Values.manifests.ingest_service }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -12,3 +13,4 @@ spec:
   ports:
   - name: http
     port: {{ tuple "elasticsearch" "internal" "client" . | include "endpoint_port_lookup" }}
+{{ end }}
