@@ -1,0 +1,47 @@
+{{- if .Values.manifests.deployment_kibana }}
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: kibana-logging
+  labels:
+    component: kibana-logging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+     component: kibana-logging
+  template:
+    metadata:
+      labels:
+        component: kibana-logging
+    spec:
+      containers:
+      - name: kibana-logging
+        image: {{ .Values.image.tag.kibana }}
+        env:
+        - name: CLUSTER_NAME
+          value: {{ .Values.conf.cluster.name }}
+        resources:
+          limits:
+            cpu: 1000m
+          requests:
+            cpu: 100m
+        ports:
+        - containerPort: {{ tuple "kibana" "internal" "ui" . | include "endpoint_port_lookup" }}
+          name: ui
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /api/status
+            port: ui
+          initialDelaySeconds: 20
+          timeoutSeconds: 5
+        volumeMounts:
+          - name: config
+            mountPath: /usr/share/kibana/config
+            readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: kibana-config
+{{ end }}

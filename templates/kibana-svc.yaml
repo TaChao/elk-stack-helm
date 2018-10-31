@@ -1,0 +1,18 @@
+{{- if .Values.manifests.kibana_service }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana-logging
+  labels:
+    component: kibana-logging
+spec:
+  selector:
+    component: kibana-logging
+  type: NodePort
+  ports:
+  - name: http
+    port: {{ tuple "kibana" "internal" "ui" . | include "endpoint_port_lookup" }}
+    # nodePort: {{ tuple "kibana" "internal" "nodeport" . | include "endpoint_port_lookup" }}
+    protocol: TCP
+    targetPort: ui
+{{ end }}
