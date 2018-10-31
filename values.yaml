@@ -95,3 +95,6 @@ manifests:
   deployment_kibana: true
   config_kibana: true
   kibana_service: true
+  master_service: true
+  ingest_service: true
+  data_service: true
