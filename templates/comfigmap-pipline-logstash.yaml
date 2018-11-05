@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-pipline
+data:
+  _10_input.conf: |
+    input {
+      tcp {
+        port => {{ tuple "logstash" "internal" "tcp" . | include "endpoint_port_lookup" }}
+        codec => json
+      }
+    }
+  _20_filter.conf: |
+    filter {
+      
+    }
+  _30_output.conf: |
+    output {
+      elasticsearch {
+        hosts => ["{{.Values.conf.kibana.config_map.elasticsearch_url}}"]
+        index => "%{[@metadata][beat]}-%{[@metadata][version]}-%{+YYYY.MM.dd}"
+        #user => "elastic"
+        #password => "changeme"
+      }
+    }

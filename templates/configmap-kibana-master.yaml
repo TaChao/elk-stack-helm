@@ -1,0 +1,12 @@
+{{- if .Values.manifests.config_kibana_master }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kibana-master-config
+data:
+  kibana.yml: |
+    ---
+    server.name: kibana
+    server.host: "0"
+    elasticsearch.url: {{.Values.conf.kibana.config_map.elasticsearch_master_url}}
+{{ end }}

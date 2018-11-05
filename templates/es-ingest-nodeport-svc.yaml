@@ -1,0 +1,19 @@
+{{- if .Values.manifests.ingest_service }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch-ingest-np
+  labels:
+    component: elasticsearch
+    role: ingest
+spec:
+  type: NodePort
+  selector:
+    component: elasticsearch
+    role: ingest
+  ports:
+  - name: http
+    port: {{ tuple "elasticsearch" "internal" "client" . | include "endpoint_port_lookup" }}
+    protocol: TCP
+    targetPort: http
+{{ end }}

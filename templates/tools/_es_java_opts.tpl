@@ -19,6 +19,17 @@ return: |
 */}}
 
 {{- define "es_java_opts" -}}
-{{- $component := index . -}}
--Xms{{$component.requests.memory}} -Xmx{{$component.limits.memory}}
+{{- $envAll := index . 0 -}}
+{{- $component := index . 1 -}}
+
+{{- $unit := "k" -}}
+{{- if eq $envAll.Values.pod.resources.unit.memory "Gi" -}}
+{{- $unit := "g" -}}
+{{- end -}}
+
+{{- if eq $envAll.Values.pod.resources.unit.memory "Mi" -}}
+{{- $unit := "m" -}}
+{{- end -}}
+
+-Xms{{div $component.limits.memory 2.0 | float64}}{{ $unit }} -Xmx{{div $component.limits.memory 2}}{{ $unit }}
 {{- end -}}

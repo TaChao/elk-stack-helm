@@ -51,7 +51,7 @@ spec:
         - name: HTTP_ENABLE
           value: "true"
         - name: ES_JAVA_OPTS
-          value: {{ .Values.pod.resources.data | include "es_java_opts" | quote }}
+          value: {{ .Values.conf.elasticsearch.env.data.java_opts }}
         - name: PROCESSORS
           valueFrom:
             resourceFieldRef:
@@ -65,13 +65,13 @@ spec:
         livenessProbe:
           tcpSocket:
             port: transport
-          initialDelaySeconds: 20
+          initialDelaySeconds: 60
           periodSeconds: 10
         readinessProbe:
           httpGet:
             path: /_cluster/health
             port: http
-          initialDelaySeconds: 20
+          initialDelaySeconds: 60
           timeoutSeconds: 5
         volumeMounts:
         - name: storage

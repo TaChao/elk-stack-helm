@@ -1,0 +1,49 @@
+{{- if .Values.manifests.deployment_kibana_kubeproxy }}
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: kibana
+  labels:
+    component: kibana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+     component: kibana
+  template:
+    metadata:
+      labels:
+        component: kibana
+    spec:
+      containers:
+      - name: kibana
+        image: {{ .Values.image.tag.kibana }}
+        env:
+        - name: CLUSTER_NAME
+          value: {{ .Values.conf.cluster.name }}
+        - name: SERVER_BASEPATH
+          value: /api/v1/namespaces/default/services/kibana:http/proxy
+        resources:
+          limits:
+            cpu: 1000m
+          requests:
+            cpu: 100m
+        ports:
+        - containerPort: {{ tuple "kibana" "internal" "ui" . | include "endpoint_port_lookup" }}
+          name: ui
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /api/status
+            port: ui
+          initialDelaySeconds: 20
+          timeoutSeconds: 5
+        volumeMounts:
+          - name: config
+            mountPath: /usr/share/kibana/config
+            readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: kibana-master-config
+{{ end }}

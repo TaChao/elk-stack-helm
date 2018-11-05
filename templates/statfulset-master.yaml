@@ -55,7 +55,7 @@ spec:
         - name: HTTP_ENABLE
           value: "false"
         - name: ES_JAVA_OPTS
-          value: {{ .Values.pod.resources.master | include "es_java_opts" | quote }}
+          value: {{ .Values.conf.elasticsearch.env.master.java_opts }}
         - name: "NETWORK_HOST"
           value: "_eth0:ipv4_"
         - name: PROCESSORS
@@ -69,7 +69,7 @@ spec:
         livenessProbe:
           tcpSocket:
             port: transport
-          initialDelaySeconds: 20
+          initialDelaySeconds: 60
           periodSeconds: 10
         volumeMounts:
         - name: storage

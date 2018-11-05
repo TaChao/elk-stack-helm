@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch-master
+  labels:
+    component: elasticsearch
+    role: master
+spec:
+  selector:
+    component: elasticsearch
+    role: master
+  ports:
+  - name: http
+    port: {{ tuple "elasticsearch" "internal" "client" . | include "endpoint_port_lookup" }}
+#type: LoadBalancer

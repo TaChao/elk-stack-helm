@@ -48,10 +48,10 @@ spec:
           value: "false"
         - name: NODE_DATA
           value: "false"
-        - name: HTTP_ENABLE
-          value: "false"
+        # - name: HTTP_ENABLE
+        #   value: "false"
         - name: ES_JAVA_OPTS
-          value: {{ .Values.pod.resources.master | include "es_java_opts" | quote }}
+          value: {{ .Values.conf.elasticsearch.env.master.java_opts }}
         - name: PROCESSORS
           valueFrom:
             resourceFieldRef:
@@ -60,11 +60,19 @@ spec:
         ports:
         - containerPort: {{ tuple "elasticsearch" "internal" "discovery" . | include "endpoint_port_lookup" }}
           name: transport
+        - containerPort: {{ tuple "elasticsearch" "internal" "client" . | include "endpoint_port_lookup" }}
+          name: http
         livenessProbe:
           tcpSocket:
             port: transport
           initialDelaySeconds: 20
           periodSeconds: 10
+        # readinessProbe:
+        #   httpGet:
+        #     path: /_cluster/health
+        #     port: http
+        #   initialDelaySeconds: 20
+        #   timeoutSeconds: 5
         volumeMounts:
         - name: storage
           mountPath: /data

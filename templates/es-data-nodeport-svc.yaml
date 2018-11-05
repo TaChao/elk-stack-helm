@@ -1,0 +1,19 @@
+{{- if .Values.manifests.data_service }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch-data-np
+  labels:
+    component: elasticsearch
+    role: data
+spec:
+  type: NodePort
+  selector:
+    component: elasticsearch
+    role: data
+  ports:
+  - name: http
+    port: {{ tuple "elasticsearch" "internal" "client" . | include "endpoint_port_lookup" }}
+    protocol: TCP
+    targetPort: http
+{{ end }}

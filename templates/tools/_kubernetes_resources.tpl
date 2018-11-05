@@ -49,19 +49,19 @@ resources:
   {{- if or $component.limits.cpu $component.limits.memory }}
   limits:
     {{- if $component.limits.cpu }}
-    cpu: {{ $component.limits.cpu | quote }}
+    cpu: "{{ $component.limits.cpu }}{{ $envAll.Values.pod.resources.unit.cpu }}"
     {{- end }}
     {{- if $component.limits.memory }}
-    memory: {{ $component.limits.memory | quote }}
+    memory: "{{ $component.limits.memory }}{{ $envAll.Values.pod.resources.unit.memory }}"
     {{- end }}
   {{- end }}
   {{- if or $component.requests.cpu $component.requests.memory }}
   requests:
     {{- if $component.requests.cpu }}
-    cpu: {{ $component.requests.cpu | quote }}
+    cpu: "{{ $component.requests.cpu }}{{ $envAll.Values.pod.resources.unit.cpu }}"
     {{- end }}
     {{- if $component.requests.memory }}
-    memory: {{ $component.requests.memory | quote }}
+    memory: "{{ $component.requests.memory }}{{ $envAll.Values.pod.resources.unit.memory }}"
     {{- end }}
   {{- end }}
 {{- end -}}
