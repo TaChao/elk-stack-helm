@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: logstash-config
-data:
-  logstash.yml: |
-{{ tuple "bin/_logstash.yml.tpl" . | include "tools.template" | indent 4 }}
