@@ -4,9 +4,9 @@
 image:
   tag:
     init: busybox:1.27.2
-    elasticsearch: quay.io/pires/docker-elasticsearch-kubernetes:6.4.2
-    logstash: docker.elastic.co/logstash/logstash:6.4.2
-    kibana: docker.elastic.co/kibana/kibana-oss:6.4.2
+    elasticsearch: killonexx/elasticsearch:6.4.2
+    logstash: killonexx/logstash:6.4.2
+    kibana: killonexx/kibana:6.4.2
     beats:
       packetbeats: docker.elastic.co/beats/packetbeat:6.4.2
       filebeats: docker.elastic.co/beats/filebeat:6.4.2
@@ -55,11 +55,12 @@ conf:
   cluster:
     name: myesdb
   elasticsearch:
+    disable_xpack: false 
     env:
       data:
         java_opts: -Xms2g -Xmx2g
       master:
-        java_opts: -Xms256m -Xmx256m
+        java_opts: -Xms512m -Xmx512m
       ingest:
         java_opts: -Xms1g -Xmx1g
   kibana:

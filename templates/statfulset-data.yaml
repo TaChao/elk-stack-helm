@@ -76,6 +76,13 @@ spec:
         volumeMounts:
         - name: storage
           mountPath: /data
+        - name: config
+          subPath: elasticsearch.yml
+          mountPath: /usr/share/elasticsearch/config/elasticsearch.yml
+      volumes:
+        - name: config
+          configMap:
+            name: elasticsearch-config
   volumeClaimTemplates:
   - metadata:
       name: storage

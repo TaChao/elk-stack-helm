@@ -74,8 +74,15 @@ spec:
         volumeMounts:
         - name: storage
           mountPath: /data
+        - name: config
+          subPath: elasticsearch.yml
+          mountPath: /usr/share/elasticsearch/config/elasticsearch.yml
+          readOnly: true
       volumes:
           - emptyDir:
               medium: ""
             name: "storage"
+          - name: config
+            configMap:
+              name: elasticsearch-config
 {{ end }}
