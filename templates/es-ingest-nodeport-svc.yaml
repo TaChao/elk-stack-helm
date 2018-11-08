@@ -16,4 +16,7 @@ spec:
     port: {{ tuple "elasticsearch" "internal" "client" . | include "endpoint_port_lookup" }}
     protocol: TCP
     targetPort: http
+    {{- if eq .Values.endpoints.specific_nodeport true }}
+    nodePort: {{ tuple "elasticsearch" "node_port" "ingest" . | include "endpoint_port_lookup" }}
+    {{ end }}
 {{ end }}

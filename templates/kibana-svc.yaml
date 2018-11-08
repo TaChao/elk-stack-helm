@@ -12,7 +12,9 @@ spec:
   ports:
   - name: http
     port: {{ tuple "kibana" "internal" "ui" . | include "endpoint_port_lookup" }}
-    # nodePort: {{ tuple "kibana" "internal" "nodeport" . | include "endpoint_port_lookup" }}
+    {{- if eq .Values.endpoints.specific_nodeport true }}
+    nodePort: {{ tuple "kibana" "node_port" "http" . | include "endpoint_port_lookup" }}
+    {{ end }}
     protocol: TCP
     targetPort: ui
 {{ end }}

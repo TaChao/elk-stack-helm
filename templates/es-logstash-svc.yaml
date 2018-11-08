@@ -10,6 +10,9 @@ spec:
   ports:
   - port: {{ tuple "logstash" "internal" "tcp" . | include "endpoint_port_lookup" }}
     name: transport
+    {{- if eq .Values.endpoints.specific_nodeport true }}
+    nodePort: {{ tuple "logstash" "node_port" "tcp" . | include "endpoint_port_lookup" }}
+    {{ end }}
   selector:
     component: elasticsearch
     role: logstash

@@ -29,24 +29,24 @@ pod:
       cpu: "m"
     master:
       requests:
-        memory: "1"
+        memory: "2"
         cpu: "100"
       limits:
-        memory: "1"
+        memory: "2"
         cpu: "2000"
     data:
       requests:
-        memory: "4"
+        memory: "8"
         cpu: "100"
       limits:
-        memory: "4"
+        memory: "8"
         cpu: "2000"
     ingest:
       requests:
-        memory: "2"
+        memory: "4"
         cpu: "100"
       limits:
-        memory: "2"
+        memory: "4"
         cpu: "2000"
 
 conf:
@@ -58,11 +58,11 @@ conf:
     disable_xpack: false 
     env:
       data:
-        java_opts: -Xms2g -Xmx2g
+        java_opts: -Xms4g -Xmx4g
       master:
-        java_opts: -Xms512m -Xmx512m
-      ingest:
         java_opts: -Xms1g -Xmx1g
+      ingest:
+        java_opts: -Xms2g -Xmx2g
   kibana:
   #Recommend running Kibana separate from your Elasticsearch 'data' or 'master' nodes
     config_map:
@@ -77,32 +77,34 @@ storage:
   requests:
     storage:
       master: 5Gi
-      data: 10Gi
+      data: 20Gi
   storage_class: gluster
 
 endpoints:
+  specific_nodeport: true
   elasticsearch:
     port:
       client:
         default: 9200
+        node_port: 31200
       http:
         default: 80
       discovery:
         default: 9300
+      ingest:
+        node_port: 31201
   kibana:
     port:
       ui:
         default: 5601
-      nodeport:
-        default: 30003
       http:
+        node_port: 31203
         default: 80
   logstash:
     port:
       tcp:
         default: 12345
-      nodeport:
-        default: 30002
+        node_port: 31202
 
 manifests:
   statfulset_data: true
@@ -111,11 +113,11 @@ manifests:
   deployment_ingest: true
   deployment_kibana: true
   deployment_logstash: true
-  deployment_kibana_kubeproxy: true
+  deployment_kibana_kubeproxy: false
   config_kibana: true
-  config_kibana_master: true
+  config_kibana_master: false
   kibana_service: true
   master_service: true
   ingest_service: true
   data_service: true
-  kibana_kubeproxy_service: true
+  kibana_kubeproxy_service: false
