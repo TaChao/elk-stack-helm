@@ -8,7 +8,7 @@ node:
   ingest: ${NODE_INGEST:true}
   max_local_storage_nodes: ${MAX_LOCAL_STORAGE_NODES:1}
 
-processors: ${PROCESSORS:1}
+# processors: ${PROCESSORS:1}
 
 network.host: ${NETWORK_HOST:_site_}
 

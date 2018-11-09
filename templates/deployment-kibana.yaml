@@ -22,10 +22,8 @@ spec:
         - name: CLUSTER_NAME
           value: {{ .Values.conf.cluster.name }}
         resources:
-          limits:
-            cpu: 1000m
           requests:
-            cpu: 100m
+            cpu: 1000m
         ports:
         - containerPort: {{ tuple "kibana" "internal" "ui" . | include "endpoint_port_lookup" }}
           name: ui

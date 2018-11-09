@@ -26,28 +26,28 @@ pod:
     enabled: true
     unit:
       memory: "Gi"
-      cpu: "m"
+      cpu: ""
     master:
       requests:
         memory: "2"
-        cpu: "100"
+        cpu: "2"
       limits:
-        memory: "2"
-        cpu: "2000"
+        memory: 
+        cpu: 
     data:
       requests:
         memory: "8"
-        cpu: "100"
+        cpu: "4"
       limits:
-        memory: "8"
-        cpu: "2000"
+        memory: 
+        cpu: 
     ingest:
       requests:
         memory: "4"
-        cpu: "100"
+        cpu: "2"
       limits:
-        memory: "4"
-        cpu: "2000"
+        memory: 
+        cpu: 
 
 conf:
   init:
