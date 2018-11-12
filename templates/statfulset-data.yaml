@@ -5,6 +5,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: es-data
+  namespace: {{ .Values.endpoints.namespace }}
   labels:
     component: elasticsearch
     role: data

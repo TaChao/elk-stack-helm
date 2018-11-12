@@ -4,6 +4,7 @@ metadata:
   name: elasticsearch-logstash
   labels:
     component: elasticsearch
+    namespace: {{ .Values.endpoints.namespace }}
     role: logstash
 spec:
   type: NodePort

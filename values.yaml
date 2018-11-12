@@ -81,6 +81,7 @@ storage:
   storage_class: gluster
 
 endpoints:
+  namespace: elk-stack
   specific_nodeport: true
   elasticsearch:
     port:

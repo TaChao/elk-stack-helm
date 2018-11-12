@@ -4,6 +4,7 @@ apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: logstash
+  namespace: {{ .Values.endpoints.namespace }}
   labels:
     component: elasticsearch
     role: logstash

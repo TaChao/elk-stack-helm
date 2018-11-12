@@ -3,6 +3,7 @@ apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: kibana
+  namespace: {{ .Values.endpoints.namespace }}
   labels:
     component: kibana
 spec:
