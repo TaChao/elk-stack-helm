@@ -15,7 +15,6 @@ network.host: ${NETWORK_HOST:_site_}
 path:
   data: /data/data
   logs: /data/log
-  repo: ${REPO_LOCATIONS:""}
 
 bootstrap:
   memory_lock: ${MEMORY_LOCK:false}
