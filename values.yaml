@@ -20,8 +20,8 @@ image:
 pod:
   replicas:
     master: 3
-    data: 3
-    ingest: 3
+    data: 2
+    ingest: 1
   resources:
     enabled: true
     unit:
@@ -36,14 +36,14 @@ pod:
         cpu: 
     data:
       requests:
-        memory: "8"
+        memory: "4"
         cpu: "4"
       limits:
         memory: 
         cpu: 
     ingest:
       requests:
-        memory: "4"
+        memory: "2"
         cpu: "2"
       limits:
         memory: 
@@ -77,8 +77,8 @@ storage:
   requests:
     storage:
       master: 5Gi
-      data: 20Gi
-  storage_class: gluster
+      data: 10Gi
+  storage_class: rook
 
 endpoints:
   namespace: elk-stack

@@ -10,6 +10,8 @@ metadata:
     component: elasticsearch
     role: data
 spec:
+  securityContext:
+    runAsUser: 0
   selector:
     matchLabels:
       component: elasticsearch
@@ -25,10 +27,16 @@ spec:
       initContainers:
       - name: init-sysctl
         image: busybox:1.27.2
-        command:
-        - sysctl
-        - -w
-        - vm.max_map_count={{ .Values.conf.init.max_map_count }}
+        command: ["/bin/sh","-c","sysctl -w vm.max_map_count={{ .Values.conf.init.max_map_count }} && chmod 775 /data"]
+        # - sysctl
+        # - -w
+        # - vm.max_map_count={{ .Values.conf.init.max_map_count }}
+        # - "&&"
+        # - sleep
+        # - 10
+        volumeMounts:
+        - name: storage
+          mountPath: /data
         securityContext:
           privileged: true
       containers:

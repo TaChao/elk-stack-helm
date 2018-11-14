@@ -9,4 +9,5 @@ data:
 {{- if eq .Values.conf.elasticsearch.disable_xpack true }}
 {{ "xpack.ml.enabled: false" | indent 4 }}
 {{ end }}
-    
+  docker-entrypoint.sh: |
+{{ tuple "bin/_docker-entrypoint.sh.tpl" . | include "tools.template" | indent 4 }}
