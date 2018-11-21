@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-patterns
+  namespace: {{ .Values.endpoints.namespace }}
+data:
+  openstack-log: |
+{{ tuple "bin/_openstack-log.tpl" . | include "tools.template" | indent 4 }}

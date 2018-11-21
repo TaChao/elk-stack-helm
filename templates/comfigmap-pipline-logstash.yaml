@@ -6,14 +6,16 @@ metadata:
 data:
   _10_input.conf: |
     input {
-      tcp {
+      beats {
         port => {{ tuple "logstash" "internal" "tcp" . | include "endpoint_port_lookup" }}
-        codec => json
       }
     }
   _20_filter.conf: |
     filter {
-      
+      grok{
+        patterns_dir => ["/usr/share/logstash/patterns/openstack-log"]
+        match => {"message" => "%{TIMESTAMP:Timestamp} %{PID:Pid} %{LOG_LEVEL:log_level} %{PYTHON_MODULE:python_module} (\[%{GLOBAL_REQUEST_ID:global_request_id} (req-%{REQUEST_ID:request_id} %{USER_ID:user_id} %{PROJECT_DOMAIN:project_domain})|-\])? %{PAYLOAD:Payload}"}
+      }
     }
   _30_output.conf: |
     output {

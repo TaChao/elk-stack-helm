@@ -104,7 +104,7 @@ endpoints:
   logstash:
     port:
       tcp:
-        default: 12345
+        default: 5044
         node_port: 31202
 
 manifests:
