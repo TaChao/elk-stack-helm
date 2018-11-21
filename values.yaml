@@ -30,21 +30,21 @@ pod:
     master:
       requests:
         memory: "2"
-        cpu: "2"
+        cpu: 
       limits:
         memory: 
         cpu: 
     data:
       requests:
         memory: "4"
-        cpu: "4"
+        cpu: 
       limits:
         memory: 
         cpu: 
     ingest:
       requests:
         memory: "2"
-        cpu: "2"
+        cpu: 
       limits:
         memory: 
         cpu: 
