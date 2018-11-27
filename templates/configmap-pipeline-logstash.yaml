@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: logstash-pipline
+  name: logstash-pipeline
   namespace: {{ .Values.endpoints.namespace }}
 data:
   _10_input.conf: |
